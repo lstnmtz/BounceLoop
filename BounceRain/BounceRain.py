@@ -122,6 +122,11 @@ def handle_collisions():
                 b2.vx = tx * dpTan2 + nx * new_dpNorm2
                 b2.vy = ty * dpTan2 + ny * new_dpNorm2
 
+# Initialiser la police
+font = pygame.font.Font(None, 72)  # Police par défaut, taille 72 (plus grande)
+text_surface = font.render("Watch until the end... if you can.", True, (255, 255, 255))  # Texte blanc
+text_rect = text_surface.get_rect(center=(WIDTH // 2, 100))  # Centré horizontalement, plus bas
+
 # Boucle principale
 running = True
 spawn_timer = 0
@@ -151,6 +156,9 @@ while running:
     # Dessin
     for ball in balls:
         ball.draw(SCREEN)
+
+    # Afficher le texte
+    SCREEN.blit(text_surface, text_rect)
 
     pygame.display.flip()
 

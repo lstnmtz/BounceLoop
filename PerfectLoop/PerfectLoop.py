@@ -16,12 +16,13 @@ BALL_COLOR = (240, 240, 255)
 # Initialisation
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Perfect Loop")
 clock = pygame.time.Clock()
 
 # Charger un son doux
 pygame.mixer.init()
 pock_sound = pygame.mixer.Sound('pock.mp3')  # Remplace par ton fichier son
-pock_sound.set_volume(0.3)
+pock_sound.set_volume(0.5)
 RAIN_SOUND = pygame.mixer.Sound("rain_loop.mp3")  # Bruit de pluie en boucle
 RAIN_SOUND.play(loops=-1)
 

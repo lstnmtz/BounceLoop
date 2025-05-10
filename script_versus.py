@@ -84,12 +84,64 @@ balls = [
 # Angle de rotation initial
 rotation_angle = 0
 
+# Initialisation du temps de départ
+start_time = pygame.time.get_ticks()
+
 # Boucle principale
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Calcul du temps écoulé
+    elapsed_time = (pygame.time.get_ticks() - start_time) / 1000  # Convertir en secondes
+
+    # Vérifier si 57 secondes se sont écoulées
+    if elapsed_time >= 57:
+        # Calculer le gagnant
+        if count_patapim > count_sahur:
+            winner_text = "Patapim wins!"
+        elif count_sahur > count_patapim:
+            winner_text = "Sahur wins!"
+        else:
+            winner_text = "It's a tie!"
+
+        # Afficher le message final
+        screen.fill((0, 0, 0))  # Effacer l'écran
+        font = pygame.font.Font(None, 100)
+        winner_surface = font.render(winner_text, True, (255, 255, 255))
+        winner_rect = winner_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
+        screen.blit(winner_surface, winner_rect)
+
+        # Afficher les scores des deux familles
+        patapim_score_surface = font.render(f"Patapim: {count_patapim}", True, (255, 255, 255))
+        patapim_score_rect = patapim_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        screen.blit(patapim_score_surface, patapim_score_rect)
+
+        sahur_score_surface = font.render(f"Sahur: {count_sahur}", True, (255, 255, 255))
+        sahur_score_rect = sahur_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+        screen.blit(sahur_score_surface, sahur_score_rect)
+
+        # Afficher l'image du gagnant
+        if count_patapim > count_sahur:
+            winner_image = pygame.image.load("images/patapim.jpg").convert_alpha()
+        elif count_sahur > count_patapim:
+            winner_image = pygame.image.load("images/sahur.jpg").convert_alpha()
+        else:
+            winner_image = None  # Pas d'image en cas d'égalité
+
+        if winner_image:
+            winner_image = pygame.transform.scale(winner_image, (200, 200))  # Redimensionner l'image
+            winner_image_rect = winner_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 200))
+            screen.blit(winner_image, winner_image_rect)
+
+        pygame.display.flip()
+
+        # Attendre quelques secondes avant de quitter
+        pygame.time.wait(5000)
+        running = False
+        break
 
     screen.fill((0, 0, 0))
 
@@ -142,8 +194,12 @@ while running:
             else:
                 # Sortie par l'ouverture : dédoublement
                 ball["opening_sound"].play()  # Jouer le son pour l'ouverture
-                balls_to_add.append(new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM))
-                balls_to_add.append(new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR))
+                if ball["image_path"] == "images/patapim.jpg":
+                    balls_to_add.append(new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM))
+                    balls_to_add.append(new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM))
+                elif ball["image_path"] == "images/sahur.jpg":
+                    balls_to_add.append(new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR))
+                    balls_to_add.append(new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR))
                 balls.remove(ball)  # Supprimer la balle qui est sortie
         else:
             # Dessiner la balle
@@ -159,8 +215,8 @@ while running:
     screen.blit(text_surface, text_rect)
 
     # Compter les balles par famille
-    count_patapim = sum(1 for ball in balls if ball["image_path"] == "images/patapim.jpg")
-    count_sahur = sum(1 for ball in balls if ball["image_path"] == "images/sahur.jpg")
+    count_patapim = sum(1 for ball in balls if ball["image_path"] == "images/patapim.jpg")  # Inversé avec "sahur.jpg"
+    count_sahur = sum(1 for ball in balls if ball["image_path"] == "images/sahur.jpg")  # Inversé avec "patapim.jpg"
 
     # Afficher les compteurs pour chaque famille
     font = pygame.font.Font(None, 50)

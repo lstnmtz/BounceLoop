@@ -1,0 +1,11 @@
+crée un script en python
+un format 720x1080 avec un fond noir
+un arc de cercle blanc au centre qui tourne sur lui même (taille et vitesse modulable)
+une balle qui rebondit dans le cercle aléatoirement (taille et vitesse modulable)
+à chaque rebond d'une balle, un doux bruit de rebond (bruit modulable)
+si la balle sort par l'ouverture, elle est dupliquée et remise au centre, et ainsi de suite
+dans le fond du cercle, une image "cachée" (image modulable)
+l'image est visible à travers les balles
+plus il y a de balles, plus c'est simple de voir l'image
+le but est de deviner l'image "cachée"
+fin au bout de 1 min

@@ -25,7 +25,7 @@ CIRCLE_SPEED = 360 / (FPS * 15)  # Vitesse de rotation pour une boucle parfaite
 GRAVITY = 0.05
 
 # Paramètres de la balle
-BALL_IMAGE_PATH = "images/patapim.jpg"  # Image de la balle
+BALL_IMAGE_PATH = "images/yes.jpg"  # Image de la balle
 BALL_SIZE = 50
 BALL_SPEED = 6
 
@@ -37,10 +37,10 @@ pygame.draw.circle(ball_mask, (255, 255, 255, 255), (BALL_SIZE // 2, BALL_SIZE /
 ball_image.blit(ball_mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
 # Chargement des sons
-SOUND_PATH_REBOUND_PATAPIM = "sons/brrr.mp3"  # Son de rebond pour "patapim.jpg"
-SOUND_PATH_OPENING_PATAPIM = "sons/patapim.mp3"  # Son d'ouverture pour "patapim.jpg"
-SOUND_PATH_REBOUND_SAHUR = "sons/tung.mp3"  # Son de rebond pour "sahur.jpg"
-SOUND_PATH_OPENING_SAHUR = "sons/sahur.mp3"  # Son d'ouverture pour "sahur.jpg"
+SOUND_PATH_REBOUND_yes = "sons/yes.mp3"  # Son de rebond pour "yes.jpg"
+SOUND_PATH_OPENING_yes = "sons/yes.mp3"  # Son d'ouverture pour "yes.jpg"
+SOUND_PATH_REBOUND_no = "sons/no.mp3"  # Son de rebond pour "no.jpg"
+SOUND_PATH_OPENING_no = "sons/no.mp3"  # Son d'ouverture pour "no.jpg"
 
 # Fonction pour générer une nouvelle balle
 def new_ball(image_path, speed, rebound_sound_path, opening_sound_path):
@@ -77,8 +77,8 @@ def is_angle_in_range(angle, start, end):
 
 # Initialisation des balles
 balls = [
-    new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM),
-    new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR),
+    new_ball("images/yes.jpg", BALL_SPEED, SOUND_PATH_REBOUND_yes, SOUND_PATH_OPENING_yes),
+    new_ball("images/no.jpg", BALL_SPEED, SOUND_PATH_REBOUND_no, SOUND_PATH_OPENING_no),
 ]
 
 # Angle de rotation initial
@@ -100,10 +100,10 @@ while running:
     # Vérifier si 57 secondes se sont écoulées
     if elapsed_time >= 57:
         # Calculer le gagnant
-        if count_patapim > count_sahur:
-            winner_text = "Patapim wins!"
-        elif count_sahur > count_patapim:
-            winner_text = "Sahur wins!"
+        if count_yes > count_no:
+            winner_text = "YES wins!"
+        elif count_no > count_yes:
+            winner_text = "NO wins!"
         else:
             winner_text = "It's a tie!"
 
@@ -115,19 +115,19 @@ while running:
         screen.blit(winner_surface, winner_rect)
 
         # Afficher les scores des deux familles
-        patapim_score_surface = font.render(f"Patapim: {count_patapim}", True, (255, 255, 255))
-        patapim_score_rect = patapim_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-        screen.blit(patapim_score_surface, patapim_score_rect)
+        yes_score_surface = font.render(f"YES: {count_yes}", True, (255, 255, 255))
+        yes_score_rect = yes_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        screen.blit(yes_score_surface, yes_score_rect)
 
-        sahur_score_surface = font.render(f"Sahur: {count_sahur}", True, (255, 255, 255))
-        sahur_score_rect = sahur_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
-        screen.blit(sahur_score_surface, sahur_score_rect)
+        no_score_surface = font.render(f"NO: {count_no}", True, (255, 255, 255))
+        no_score_rect = no_score_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+        screen.blit(no_score_surface, no_score_rect)
 
         # Afficher l'image du gagnant
-        if count_patapim > count_sahur:
-            winner_image = pygame.image.load("images/patapim.jpg").convert_alpha()
-        elif count_sahur > count_patapim:
-            winner_image = pygame.image.load("images/sahur.jpg").convert_alpha()
+        if count_yes > count_no:
+            winner_image = pygame.image.load("images/yes.jpg").convert_alpha()
+        elif count_no > count_yes:
+            winner_image = pygame.image.load("images/no.jpg").convert_alpha()
         else:
             winner_image = None  # Pas d'image en cas d'égalité
 
@@ -194,12 +194,12 @@ while running:
             else:
                 # Sortie par l'ouverture : dédoublement
                 ball["opening_sound"].play()  # Jouer le son pour l'ouverture
-                if ball["image_path"] == "images/patapim.jpg":
-                    balls_to_add.append(new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM))
-                    balls_to_add.append(new_ball("images/patapim.jpg", BALL_SPEED, SOUND_PATH_REBOUND_PATAPIM, SOUND_PATH_OPENING_PATAPIM))
-                elif ball["image_path"] == "images/sahur.jpg":
-                    balls_to_add.append(new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR))
-                    balls_to_add.append(new_ball("images/sahur.jpg", BALL_SPEED, SOUND_PATH_REBOUND_SAHUR, SOUND_PATH_OPENING_SAHUR))
+                if ball["image_path"] == "images/yes.jpg":
+                    balls_to_add.append(new_ball("images/yes.jpg", BALL_SPEED, SOUND_PATH_REBOUND_yes, SOUND_PATH_OPENING_yes))
+                    balls_to_add.append(new_ball("images/yes.jpg", BALL_SPEED, SOUND_PATH_REBOUND_yes, SOUND_PATH_OPENING_yes))
+                elif ball["image_path"] == "images/no.jpg":
+                    balls_to_add.append(new_ball("images/no.jpg", BALL_SPEED, SOUND_PATH_REBOUND_no, SOUND_PATH_OPENING_no))
+                    balls_to_add.append(new_ball("images/no.jpg", BALL_SPEED, SOUND_PATH_REBOUND_no, SOUND_PATH_OPENING_no))
                 balls.remove(ball)  # Supprimer la balle qui est sortie
         else:
             # Dessiner la balle
@@ -208,32 +208,37 @@ while running:
     # Ajouter les nouvelles balles
     balls.extend(balls_to_add)
 
-    # Affichage du texte
+    # Affichage du texte avec un rectangle blanc derrière
     font = pygame.font.Font(None, 74)
-    text_surface = font.render("patapim VS sahur", True, (255, 255, 255))
+    text_surface = font.render("Are you dumb?", True, (0, 0, 0))  # Texte en noir
     text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - CIRCLE_RADIUS - 50))
+
+    # Dessiner un rectangle blanc derrière le texte
+    pygame.draw.rect(screen, (255, 255, 255), text_rect.inflate(20, 10))  # Rectangle légèrement plus grand que le texte
+
+    # Dessiner le texte par-dessus le rectangle
     screen.blit(text_surface, text_rect)
 
     # Compter les balles par famille
-    count_patapim = sum(1 for ball in balls if ball["image_path"] == "images/patapim.jpg")  # Inversé avec "sahur.jpg"
-    count_sahur = sum(1 for ball in balls if ball["image_path"] == "images/sahur.jpg")  # Inversé avec "patapim.jpg"
+    count_yes = sum(1 for ball in balls if ball["image_path"] == "images/yes.jpg")  # Inversé avec "no.jpg"
+    count_no = sum(1 for ball in balls if ball["image_path"] == "images/no.jpg")  # Inversé avec "yes.jpg"
 
     # Afficher les compteurs pour chaque famille
     font = pygame.font.Font(None, 50)
 
-    # Compteur pour "patapim.jpg"
-    patapim_image = pygame.image.load("images/patapim.jpg").convert_alpha()
-    patapim_image = pygame.transform.scale(patapim_image, (BALL_SIZE, BALL_SIZE))
-    screen.blit(patapim_image, (WIDTH // 2 - 150, HEIGHT // 2 + CIRCLE_RADIUS + 20))
-    patapim_counter = font.render(f"{count_patapim}", True, (255, 255, 255))
-    screen.blit(patapim_counter, (WIDTH // 2 - 100, HEIGHT // 2 + CIRCLE_RADIUS + 30))
+    # Compteur pour "yes.jpg"
+    yes_image = pygame.image.load("images/yes.jpg").convert_alpha()
+    yes_image = pygame.transform.scale(yes_image, (BALL_SIZE, BALL_SIZE))
+    screen.blit(yes_image, (WIDTH // 2 - 150, HEIGHT // 2 + CIRCLE_RADIUS + 20))
+    yes_counter = font.render(f"{count_yes}", True, (255, 255, 255))
+    screen.blit(yes_counter, (WIDTH // 2 - 100, HEIGHT // 2 + CIRCLE_RADIUS + 30))
 
-    # Compteur pour "sahur.jpg"
-    sahur_image = pygame.image.load("images/sahur.jpg").convert_alpha()
-    sahur_image = pygame.transform.scale(sahur_image, (BALL_SIZE, BALL_SIZE))
-    screen.blit(sahur_image, (WIDTH // 2 + 50, HEIGHT // 2 + CIRCLE_RADIUS + 20))
-    sahur_counter = font.render(f"{count_sahur}", True, (255, 255, 255))
-    screen.blit(sahur_counter, (WIDTH // 2 + 100, HEIGHT // 2 + CIRCLE_RADIUS + 30))
+    # Compteur pour "no.jpg"
+    no_image = pygame.image.load("images/no.jpg").convert_alpha()
+    no_image = pygame.transform.scale(no_image, (BALL_SIZE, BALL_SIZE))
+    screen.blit(no_image, (WIDTH // 2 + 50, HEIGHT // 2 + CIRCLE_RADIUS + 20))
+    no_counter = font.render(f"{count_no}", True, (255, 255, 255))
+    screen.blit(no_counter, (WIDTH // 2 + 100, HEIGHT // 2 + CIRCLE_RADIUS + 30))
 
     pygame.display.flip()
     clock.tick(FPS)

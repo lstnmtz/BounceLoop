@@ -25,7 +25,7 @@ CIRCLE_SPEED = 360 / (FPS * 15)  # Vitesse de rotation pour une boucle parfaite
 GRAVITY = 0.05
 
 # Paramètres de la balle
-BALL_IMAGE_PATH = "patapim.jpg"  # Image de la balle
+BALL_IMAGE_PATH = "images/patapim.jpg"  # Image de la balle
 BALL_SIZE = 50
 BALL_SPEED = 6
 
@@ -37,8 +37,8 @@ pygame.draw.circle(ball_mask, (255, 255, 255, 255), (BALL_SIZE // 2, BALL_SIZE /
 ball_image.blit(ball_mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
 # Chargement des sons
-SOUND_PATH_REBOUND = "brrr.mp3"  # Son pour les rebonds
-SOUND_PATH_OPENING = "patapim.mp3"  # Son pour l'ouverture
+SOUND_PATH_REBOUND = "sons/brrr.mp3"  # Son pour les rebonds
+SOUND_PATH_OPENING = "sons/patapim.mp3"  # Son pour l'ouverture
 rebound_sound = pygame.mixer.Sound(SOUND_PATH_REBOUND)
 opening_sound = pygame.mixer.Sound(SOUND_PATH_OPENING)
 

@@ -4,18 +4,31 @@ import sys
 import math
 import random
 
+# Choix de la version : "easy", "medium" ou "hard"
+GAME_VERSION = "hard"  # <-- change ici pour "easy", "medium" ou "hard"
+
+if GAME_VERSION == "easy":
+    BALL_DIAMETER = 15
+    MAX_TIME = 30.0
+    VERSION_TEXT = ("version easy", (0, 200, 0))  # vert
+elif GAME_VERSION == "medium":
+    BALL_DIAMETER = 7
+    MAX_TIME = 50.0
+    VERSION_TEXT = ("version medium", (255, 128, 0))  # orange
+else:
+    BALL_DIAMETER = 2
+    MAX_TIME = 70.0
+    VERSION_TEXT = ("version hard", (255, 0, 0))  # rouge
+
 # ----------------------------------------------
-# Paramètres modifiables (en-tête du script)
 WINDOW_WIDTH = 720            # Largeur de la fenêtre
 WINDOW_HEIGHT = 1280          # Hauteur de la fenêtre
 ARC_RADIUS = 300              # Rayon de l'arc de cercle (en pixels)
 ARC_OPEN_ANGLE = 270          # Ouverture de l'arc (en degrés, portion manquante de 360°)
 ARC_ROTATION_SPEED = 50.0     # Vitesse de rotation de l'arc (degrés par seconde, sens horaire)
-BALL_DIAMETER = 5            # Diamètre de la balle (pixels)
 BALL_SPEED = 200.0             # Vitesse de la balle (pixels par seconde)
-IMAGE_PATH = "images/mbappe.png"   # Chemin vers l'image de fond
+IMAGE_PATH = "images/paul.png"   # Chemin vers l'image de fond
 SOUND_PATH = "sons/bounce.wav"    # Chemin vers le son joué au rebond
-MAX_TIME = 70.0               # Durée totale de l'exécution (secondes)
 # ----------------------------------------------
 
 # Initialisation de Pygame et de la fenêtre
@@ -210,12 +223,12 @@ while running:
     text_rect = text_surface.get_rect(center=(CENTER_X, CENTER_Y - ARC_RADIUS - 60))
     screen.blit(text_surface, text_rect)
 
-    # Afficher "version hard" en rouge, plus petit, juste en dessous
+    # Afficher la version (couleur selon la difficulté)
     font_small = pygame.font.Font(None, 32)
-    hard_text = "version hard"
-    hard_surface = font_small.render(hard_text, True, (255, 0, 0))
-    hard_rect = hard_surface.get_rect(center=(CENTER_X, CENTER_Y - ARC_RADIUS - 30))
-    screen.blit(hard_surface, hard_rect)
+    version_text, version_color = VERSION_TEXT
+    version_surface = font_small.render(version_text, True, version_color)
+    version_rect = version_surface.get_rect(center=(CENTER_X, CENTER_Y - ARC_RADIUS - 30))
+    screen.blit(version_surface, version_rect)
 
     # Afficher le timer en bas du cercle, centré
     font_timer = pygame.font.Font(None, 48)
